@@ -5,19 +5,14 @@ con_down=None
 import requests
 
 def connect_down_stream():
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='0.0.0.0'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=os.environ.get('mq_host')))
     channel = connection.channel()
     channel.queue_declare(queue=os.environ.get('sender_queue'),durable=True)
     return channel
 
 
-def start_simple_socket():
-    from simple_socket import SimpleWebSocketServer,SimpleEcho
-    server = SimpleWebSocketServer('0.0.0.0', 8000, SimpleEcho)
-    server.serveforever()
-
 if __name__=='__main__':
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='0.0.0.0'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=os.environ.get('mq_host')))
     channel = connection.channel()
     channel.queue_declare(queue=os.environ.get('receiver_queue'),durable=True)
 
