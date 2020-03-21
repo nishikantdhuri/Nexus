@@ -23,7 +23,7 @@ if __name__=='__main__':
     def callback(ch, method, properties, body):
         print('messag received')
         dictToSend = {'status': os.environ.get('src_system')}
-        requests.post('http://'+str(os.environ.get('tracer_ip'))+':'+5000+'/soc', json=dictToSend)
+        requests.post('http://'+str(os.environ.get('tracer_ip'))+':'+str(5000)+'/soc', json=dictToSend)
         sleep()
         global con_down
         if con_down == None:
