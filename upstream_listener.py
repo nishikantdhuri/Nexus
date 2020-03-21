@@ -1,8 +1,8 @@
 import pika
 import time
 import os
-import multiprocessing as mp
 con_down=None
+import requests
 
 def connect_down_stream():
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='0.0.0.0'))
@@ -20,18 +20,15 @@ if __name__=='__main__':
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='0.0.0.0'))
     channel = connection.channel()
     channel.queue_declare(queue=os.environ.get('receiver_queue'),durable=True)
-    res=mp.Process(target=start_simple_socket)
-    res.start()
 
 
     def sleep():
-        time.sleep(60)
+        time.sleep(120)
 
     def callback(ch, method, properties, body):
         print('messag received')
-        f = open("status.txt", "w")
-        f.write(os.environ.get('src_system'))
-        f.close()
+        dictToSend = {'status': os.environ.get('src_system')}
+        requests.post('http://'+str(os.environ.get('tracer_ip'))+':'+5000+'/soc', json=dictToSend)
         sleep()
         global con_down
         if con_down == None:

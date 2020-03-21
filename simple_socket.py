@@ -4,7 +4,6 @@ class SimpleEcho(WebSocket):
 
     def handleMessage(self):
         # echo message back to client
-        time.sleep(60)
         f = open("status.txt", "r")
         msg=f.read()
         f.close()
