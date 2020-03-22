@@ -43,7 +43,7 @@ def downstream_listner():
         requests.post('http://' + str(os.environ.get('tracer_ip')) + ':' + str(5000) + '/soc', json=dictToSend)
         time.sleep(120)
         con_down = connect_mq(os.environ.get('gcd_sender'))
-        con_down.basic_publish(body=os.environ.get('src_system'), exchange='',routing_key=os.environ.get('downstream_listener'))
+        con_down.basic_publish(body=os.environ.get('src_system'), exchange='',routing_key=os.environ.get('gcd_sender'))
         con_down.close()
 
     channel.basic_consume(queue=os.environ.get('downstream_listener'), auto_ack=True, on_message_callback=callback)
