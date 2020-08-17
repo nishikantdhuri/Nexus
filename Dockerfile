@@ -9,7 +9,7 @@ ENV downstream_listener downstream2
 ENV gcd_sender gcd1
 ENV gcd_listener gcd2
 ENV src_system Nexus
-ENV mq_host 172.17.0.2
-ENV tracer_ip 172.17.0.3
+ENV mq_host mq
+ENV tracer_ip tracer
 ENV sleep_time 60
 CMD ["python","upstream_listener.py"]
